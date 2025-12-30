@@ -38,6 +38,7 @@ org\pvp\villagerlimit\commands\VLReloadCommand.class
 org\pvp\villagerlimit\commands\VLStatsCommand.class
 org\pvp\villagerlimit\PermissionGroupManager.class
 org\pvp\villagerlimit\cache\ConfigCache.class
+org\pvp\villagerlimit\commands\KillVillagersCommand.class
 org\pvp\villagerlimit\database\TradeScalingDAO.class
 org\pvp\villagerlimit\gui\LeaderboardGUI.class
 org\pvp\villagerlimit\optimization\MemoryOptimizer$MemoryStats.class
@@ -50,6 +51,5 @@ org\pvp\villagerlimit\display\ArmorStandAdapter.class
 org\pvp\villagerlimit\core\LanguageManager.class
 org\pvp\villagerlimit\VillagerLifespanManager.class
 org\pvp\villagerlimit\TradeDataManager$TradeRecord.class
-org\pvp\villagerlimit\KillVillagersCommand.class
 org\pvp\villagerlimit\optimization\MemoryOptimizer.class
 org\pvp\villagerlimit\optimization\VillagerChunkTracker.class

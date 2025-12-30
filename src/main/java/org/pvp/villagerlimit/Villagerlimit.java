@@ -4,7 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.pvp.villagerlimit.async.AsyncTaskManager;
 import org.pvp.villagerlimit.cache.CacheManager;
-import org.pvp.villagerlimit.commands.*;
+import org.pvp.villagerlimit.commands.KillVillagersCommand;
+import org.pvp.villagerlimit.commands.VLAdminCommand;
+import org.pvp.villagerlimit.commands.VLPerformanceCommand;
+import org.pvp.villagerlimit.commands.VLReloadCommand;
+import org.pvp.villagerlimit.commands.VLStatsCommand;
+import org.pvp.villagerlimit.commands.VLTopCommand;
 import org.pvp.villagerlimit.core.LanguageManager;
 import org.pvp.villagerlimit.core.ModuleManager;
 import org.pvp.villagerlimit.database.DatabaseManager;
@@ -67,15 +72,32 @@ public final class Villagerlimit extends JavaPlugin {
         getServer().getPluginManager().registerEvents(tradeListener, this);
         getServer().getPluginManager().registerEvents(new VillagerAIOptimizer(this), this);
         
-        // 注册命令
+        // 注册命令和Tab补全
         if (limitConfig.isKillVillagersEnabled()) {
-            getCommand("killvillagers").setExecutor(new KillVillagersCommand());
+            KillVillagersCommand killCmd = new KillVillagersCommand();
+            getCommand("killvillagers").setExecutor(killCmd);
+            getCommand("killvillagers").setTabCompleter(killCmd);
         }
-        getCommand("vlreload").setExecutor(new VLReloadCommand(this));
-        getCommand("vlstats").setExecutor(new VLStatsCommand(this, tradeListener.getStatisticsManager()));
-        getCommand("vltop").setExecutor(new VLTopCommand(this, tradeListener.getStatisticsManager()));
-        getCommand("vladmin").setExecutor(new VLAdminCommand(this));
-        getCommand("vlperf").setExecutor(new VLPerformanceCommand(this));
+        
+        VLReloadCommand reloadCmd = new VLReloadCommand(this);
+        getCommand("vlreload").setExecutor(reloadCmd);
+        getCommand("vlreload").setTabCompleter(reloadCmd);
+        
+        VLStatsCommand statsCmd = new VLStatsCommand(this, tradeListener.getStatisticsManager());
+        getCommand("vlstats").setExecutor(statsCmd);
+        getCommand("vlstats").setTabCompleter(statsCmd);
+        
+        VLTopCommand topCmd = new VLTopCommand(this, tradeListener.getStatisticsManager());
+        getCommand("vltop").setExecutor(topCmd);
+        getCommand("vltop").setTabCompleter(topCmd);
+        
+        VLAdminCommand adminCmd = new VLAdminCommand(this);
+        getCommand("vladmin").setExecutor(adminCmd);
+        getCommand("vladmin").setTabCompleter(adminCmd);
+        
+        VLPerformanceCommand perfCmd = new VLPerformanceCommand(this);
+        getCommand("vlperf").setExecutor(perfCmd);
+        getCommand("vlperf").setTabCompleter(perfCmd);
         
         // 注册 PlaceholderAPI
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

@@ -1,5 +1,164 @@
 # VillagerLimit 更新公告
 
+## v2.1.2 (2025-12-31) 🎨 GUI与交互增强版
+
+### 🎉 重大更新
+
+#### 全新 GUI 系统
+插件现在提供精美的图形界面，让玩家更直观地查看统计信息！
+
+**1. 统计 GUI 界面**
+- 使用 `/vlstats` 自动打开个人统计界面
+- 显示玩家头像、总交易次数、消耗经验
+- 展示最常交易的物品（前7名）
+- 精美的边框和图标设计
+
+**2. 排行榜 GUI 界面** ⭐ 新增
+- 使用 `/vltop` 打开交易排行榜
+- 前三名特殊材质显示（金块/铁块/铜块）
+- 显示玩家名、交易次数、消耗经验
+- 支持点击查看详情（未来版本）
+
+### ✨ 新增功能
+
+1. **完整的 Tab 补全系统**
+   - `/vlstats <Tab>` - 显示在线玩家列表
+   - `/vladmin <Tab>` - 显示子命令（reset/clear/info）
+   - `/vlperf <Tab>` - 显示性能选项
+   - 智能过滤，输入时自动匹配
+
+2. **排行榜 PlaceholderAPI 变量**
+   ```
+   %villagerlimit_top_1_name%    - 第1名玩家名
+   %villagerlimit_top_1_trades%  - 第1名交易次数
+   %villagerlimit_top_1_exp%     - 第1名消耗经验
+   %villagerlimit_top_10_name%   - 第10名玩家名
+   ```
+   - 支持任意排名查询
+   - 可用于计分板、全息显示
+   - 自动更新，实时同步
+
+3. **智能命令执行**
+   - 玩家执行命令：自动打开 GUI
+   - 控制台执行命令：显示文本格式
+   - 兼容性更好，体验更佳
+
+4. **新增管理命令**
+   - `/vladmin info` - 查看插件信息
+   - 显示版本、作者、数据库状态
+   - 方便服主快速诊断
+
+### 🎨 界面优化
+
+**统计 GUI 布局**：
+```
+┌─────────────────────────────┐
+│  [边框]  [玩家头像]  [边框]  │
+│  [交易次数] [经验] [时间]    │
+│  [最常交易物品展示区]        │
+│         [关闭按钮]           │
+└─────────────────────────────┘
+```
+
+**排行榜 GUI 布局**：
+```
+┌─────────────────────────────┐
+│      [排行榜标题]            │
+│  [#1金] [#2银] [#3铜]        │
+│  [#4-10 玩家列表]            │
+│         [关闭按钮]           │
+└─────────────────────────────┘
+```
+
+### 🔧 技术改进
+
+1. **模块化 GUI 系统**
+   - BaseGUI 抽象基类
+   - GUIManager 统一管理
+   - 易于扩展新界面
+
+2. **事件处理优化**
+   - 自动取消点击事件
+   - 防止物品被拿走
+   - 关闭时自动清理
+
+3. **Tab 补全架构**
+   - 所有命令实现 TabCompleter
+   - 智能过滤和匹配
+   - 支持多级补全
+
+### 📊 PlaceholderAPI 增强
+
+**新增变量总览**：
+```
+玩家统计：
+- %villagerlimit_trades%
+- %villagerlimit_exp_spent%
+- %villagerlimit_rank%
+
+排行榜（新增）：
+- %villagerlimit_top_<排名>_name%
+- %villagerlimit_top_<排名>_trades%
+- %villagerlimit_top_<排名>_exp%
+```
+
+**应用示例**：
+```yaml
+# 计分板显示
+scoreboard:
+  - "&6&l交易排行榜"
+  - "&e1. %villagerlimit_top_1_name% &7- &6%villagerlimit_top_1_trades%"
+  - "&e2. %villagerlimit_top_2_name% &7- &6%villagerlimit_top_2_trades%"
+  - "&e3. %villagerlimit_top_3_name% &7- &6%villagerlimit_top_3_trades%"
+```
+
+### 🎮 使用指南
+
+**查看统计**：
+1. 输入 `/vlstats` 打开自己的统计
+2. 输入 `/vlstats <玩家>` 查看其他玩家
+3. 在 GUI 中查看详细信息
+
+**查看排行榜**：
+1. 输入 `/vltop` 打开排行榜
+2. 查看前10名玩家
+3. 金银铜牌特殊显示
+
+**使用变量**：
+1. 安装 PlaceholderAPI
+2. 在计分板/全息中使用变量
+3. 自动显示实时数据
+
+### 📝 升级指南
+
+1. 备份现有配置和数据
+2. 替换插件jar文件为 `Villagerlimit-2.1.2.jar`
+3. 重启服务器或使用 `/vlreload`
+4. 测试 GUI 和 Tab 补全功能
+5. 配置 PlaceholderAPI 变量（可选）
+
+### ⚠️ 注意事项
+
+- 从2.1.1升级无需清空数据
+- GUI 需要玩家在线才能打开
+- 控制台执行命令仍显示文本格式
+- PlaceholderAPI 变量需要安装 PlaceholderAPI 插件
+
+### 🔗 相关链接
+
+- 完整文档：查看 README.md
+- 论坛帖子：查看 FORUM_POST.md
+- 配置示例：查看 config.yml
+- 问题反馈：联系作者 Ti_Avanti
+
+---
+
+**下载地址**：`target/Villagerlimit-2.1.2.jar`
+
+感谢使用 VillagerLimit！
+
+---
+
 ## v2.1.1 (2025-12-30) 🎯 经验系统增强版
 
 ### 🎉 重大更新

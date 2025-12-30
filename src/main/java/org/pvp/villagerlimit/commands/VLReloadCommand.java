@@ -3,9 +3,13 @@ package org.pvp.villagerlimit.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.pvp.villagerlimit.Villagerlimit;
 
-public class VLReloadCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class VLReloadCommand implements CommandExecutor, TabCompleter {
     
     private final Villagerlimit plugin;
     
@@ -20,21 +24,28 @@ public class VLReloadCommand implements CommandExecutor {
             return true;
         }
         
+        sender.sendMessage("§e正在重载配置...");
+        
         try {
+            // 重载配置文件
             plugin.reloadConfig();
+            
+            // 重新加载配置类
             plugin.getLimitConfig().reload();
+            plugin.getPermissionGroupManager().reload();
             
-            // 重载所有模块
-            if (plugin.getModuleManager() != null) {
-                plugin.getModuleManager().reloadModules();
-            }
-            
-            sender.sendMessage("§a配置已重载！");
+            sender.sendMessage("§a配置重载成功！");
         } catch (Exception e) {
-            sender.sendMessage("§c重载配置时出错: " + e.getMessage());
-            plugin.getLogger().warning("重载配置失败: " + e.getMessage());
+            sender.sendMessage("§c配置重载失败: " + e.getMessage());
+            e.printStackTrace();
         }
         
         return true;
+    }
+    
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        // vlreload 命令没有参数
+        return new ArrayList<>();
     }
 }

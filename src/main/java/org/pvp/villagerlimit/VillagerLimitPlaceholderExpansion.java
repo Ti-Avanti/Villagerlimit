@@ -38,6 +38,14 @@ public class VillagerLimitPlaceholderExpansion extends PlaceholderExpansion {
     
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
+        TradeStatisticsManager statsManager = plugin.getTradeListener().getStatisticsManager();
+        
+        // 处理排行榜变量（不需要玩家在线）
+        if (params.startsWith("top_")) {
+            return handleTopPlaceholder(params, statsManager);
+        }
+        
+        // 其他变量需要玩家在线
         if (player == null || !player.isOnline()) {
             return "";
         }
@@ -47,7 +55,6 @@ public class VillagerLimitPlaceholderExpansion extends PlaceholderExpansion {
             return "";
         }
         
-        TradeStatisticsManager statsManager = plugin.getTradeListener().getStatisticsManager();
         TradeStatisticsManager.PlayerTradeStats stats = statsManager.getPlayerStats(p.getUniqueId());
         
         switch (params.toLowerCase()) {
@@ -88,6 +95,48 @@ public class VillagerLimitPlaceholderExpansion extends PlaceholderExpansion {
                 
             default:
                 return null;
+        }
+    }
+    
+    /**
+     * 处理排行榜变量
+     * 格式: top_<排名>_<类型>
+     * 例如: top_1_name, top_1_trades, top_1_exp
+     */
+    private String handleTopPlaceholder(String params, TradeStatisticsManager statsManager) {
+        String[] parts = params.split("_");
+        if (parts.length < 3) {
+            return "";
+        }
+        
+        try {
+            int rank = Integer.parseInt(parts[1]);
+            String type = parts[2].toLowerCase();
+            
+            var leaderboard = statsManager.getLeaderboard();
+            if (rank < 1 || rank > leaderboard.size()) {
+                return "-";
+            }
+            
+            var entry = leaderboard.get(rank - 1);
+            TradeStatisticsManager.PlayerTradeStats stats = statsManager.getPlayerStats(entry.getKey());
+            
+            if (stats == null) {
+                return "-";
+            }
+            
+            switch (type) {
+                case "name":
+                    return stats.playerName;
+                case "trades":
+                    return String.valueOf(stats.totalTrades);
+                case "exp":
+                    return String.valueOf(stats.totalExpSpent);
+                default:
+                    return "";
+            }
+        } catch (NumberFormatException e) {
+            return "";
         }
     }
     

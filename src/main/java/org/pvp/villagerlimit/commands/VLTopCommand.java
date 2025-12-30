@@ -1,17 +1,21 @@
 package org.pvp.villagerlimit.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.pvp.villagerlimit.TradeStatisticsManager;
 import org.pvp.villagerlimit.Villagerlimit;
+import org.pvp.villagerlimit.gui.GUIManager;
+import org.pvp.villagerlimit.gui.LeaderboardGUI;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class VLTopCommand implements CommandExecutor {
+public class VLTopCommand implements CommandExecutor, TabCompleter {
     
     private final Villagerlimit plugin;
     private final TradeStatisticsManager statsManager;
@@ -35,6 +39,18 @@ public class VLTopCommand implements CommandExecutor {
             return true;
         }
         
+        // 如果是玩家执行命令，打开GUI
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            GUIManager guiManager = plugin.getModuleManager().getModule(GUIManager.class);
+            if (guiManager != null) {
+                LeaderboardGUI gui = new LeaderboardGUI(plugin, player, statsManager);
+                guiManager.openGUI(player, gui);
+                return true;
+            }
+        }
+        
+        // 控制台或GUI不可用时显示文本
         sender.sendMessage("§6========== §e交易排行榜 §6==========");
         
         int rank = 1;
@@ -49,6 +65,12 @@ public class VLTopCommand implements CommandExecutor {
         }
         
         return true;
+    }
+    
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        // vltop 命令没有参数
+        return new ArrayList<>();
     }
     
     private String getRankColor(int rank) {

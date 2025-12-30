@@ -3,6 +3,7 @@ package org.pvp.villagerlimit.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.pvp.villagerlimit.Villagerlimit;
 import org.pvp.villagerlimit.async.AsyncTaskManager;
 import org.pvp.villagerlimit.cache.CacheManager;
@@ -10,11 +11,16 @@ import org.pvp.villagerlimit.monitoring.PerformanceMonitor;
 import org.pvp.villagerlimit.optimization.MemoryOptimizer;
 import org.pvp.villagerlimit.optimization.VillagerChunkTracker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 性能监控命令
  * /vlperf - 查看性能统计
  */
-public class VLPerformanceCommand implements CommandExecutor {
+public class VLPerformanceCommand implements CommandExecutor, TabCompleter {
     
     private final Villagerlimit plugin;
     
@@ -47,6 +53,20 @@ public class VLPerformanceCommand implements CommandExecutor {
         }
         
         return true;
+    }
+    
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
+        
+        if (args.length == 1) {
+            List<String> options = Arrays.asList("cache", "memory", "threads", "tracker", "cleanup");
+            return options.stream()
+                .filter(opt -> opt.toLowerCase().startsWith(args[0].toLowerCase()))
+                .collect(Collectors.toList());
+        }
+        
+        return completions;
     }
     
     /**

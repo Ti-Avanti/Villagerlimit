@@ -2,6 +2,7 @@ E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\async\AsyncTask
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\cache\CacheManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\cache\ConfigCache.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\cache\PlayerDataCache.java
+E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\KillVillagersCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLAdminCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLPerformanceCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLReloadCommand.java
@@ -23,7 +24,6 @@ E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\gui\BaseGUI.jav
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\gui\GUIManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\gui\LeaderboardGUI.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\gui\StatsGUI.java
-E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\KillVillagersCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\monitoring\PerformanceMonitor.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\optimization\MemoryOptimizer.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\optimization\VillagerChunkTracker.java

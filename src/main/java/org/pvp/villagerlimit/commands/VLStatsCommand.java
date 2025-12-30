@@ -4,13 +4,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.pvp.villagerlimit.TradeStatisticsManager;
 import org.pvp.villagerlimit.Villagerlimit;
+import org.pvp.villagerlimit.gui.GUIManager;
+import org.pvp.villagerlimit.gui.StatsGUI;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class VLStatsCommand implements CommandExecutor {
+public class VLStatsCommand implements CommandExecutor, TabCompleter {
     
     private final Villagerlimit plugin;
     private final TradeStatisticsManager statsManager;
@@ -54,6 +59,18 @@ public class VLStatsCommand implements CommandExecutor {
             return true;
         }
         
+        // 如果是玩家执行命令，打开GUI
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            GUIManager guiManager = plugin.getModuleManager().getModule(GUIManager.class);
+            if (guiManager != null) {
+                StatsGUI gui = new StatsGUI(plugin, player, stats);
+                guiManager.openGUI(player, gui);
+                return true;
+            }
+        }
+        
+        // 控制台或GUI不可用时显示文本
         sender.sendMessage("§6========== §e交易统计 §6==========");
         sender.sendMessage("§e玩家: §6" + stats.playerName);
         sender.sendMessage("§e总交易次数: §6" + stats.totalTrades);
@@ -68,5 +85,22 @@ public class VLStatsCommand implements CommandExecutor {
             });
         
         return true;
+    }
+    
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
+        
+        if (args.length == 1) {
+            if (sender.hasPermission("villagerlimit.stats.others")) {
+                // 返回在线玩家列表
+                return Bukkit.getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase()))
+                    .collect(Collectors.toList());
+            }
+        }
+        
+        return completions;
     }
 }

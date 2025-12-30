@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.1.1-blue)
+![Version](https://img.shields.io/badge/version-2.1.2-blue)
 ![Minecraft](https://img.shields.io/badge/minecraft-1.8--1.21.4-green)
 ![Java](https://img.shields.io/badge/java-21-orange)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
@@ -77,7 +77,7 @@ VillagerLimit 是一款专为生存服务器设计的村民管理插件，旨在
 - **可选**: PlaceholderAPI
 
 ### 步骤
-1. 下载最新版本的 `Villagerlimit-2.1.1.jar`
+1. 下载最新版本的 `Villagerlimit-2.1.2.jar`
 2. 将 jar 文件放入服务器的 `plugins` 文件夹
 3. 重启服务器
 4. 编辑 `plugins/Villagerlimit/config.yml` 配置文件
@@ -117,6 +117,7 @@ trade-control:
 
 ## 📊 PlaceholderAPI 变量
 
+### 玩家统计变量
 ```
 %villagerlimit_trades% - 玩家总交易次数
 %villagerlimit_exp_spent% - 玩家总消耗经验
@@ -127,7 +128,27 @@ trade-control:
 %villagerlimit_daily_remaining% - 今日剩余次数
 ```
 
+### 排行榜变量
+```
+%villagerlimit_top_<排名>_name% - 排行榜指定排名的玩家名
+%villagerlimit_top_<排名>_trades% - 排行榜指定排名的交易次数
+%villagerlimit_top_<排名>_exp% - 排行榜指定排名的消耗经验
+```
+
+**示例:**
+- `%villagerlimit_top_1_name%` - 第1名玩家名
+- `%villagerlimit_top_1_trades%` - 第1名交易次数
+- `%villagerlimit_top_2_name%` - 第2名玩家名
+- `%villagerlimit_top_10_exp%` - 第10名消耗经验
+
 ## 📝 更新日志
+
+### v2.1.2 (2025-12-31)
+- ✨ 新增 GUI 系统（统计界面、排行榜界面）
+- ✨ 新增所有命令的 Tab 补全功能
+- ✨ 新增排行榜 PlaceholderAPI 变量（top_<排名>_name/trades/exp）
+- 🎨 优化命令执行体验（玩家自动打开 GUI，控制台显示文本）
+- 📝 完善命令帮助信息
 
 ### v2.1.1 (2025-12-30)
 - ✨ 新增村民寿命系统
@@ -168,7 +189,7 @@ trade-control:
 ## 📮 反馈与支持
 
 如果您在使用过程中遇到问题或有建议，欢迎：
-- 提交 [Issue](../../issues)
+- 提交 [Issue](https://github.com/Ti-Avanti/Villagerlimit/issues)
 
 
 ---
