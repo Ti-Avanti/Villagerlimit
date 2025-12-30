@@ -1,0 +1,12 @@
+name: example
+version: '${version}'
+main: gg.fotia.example.example
+api-version: 1.13
+depend: []
+softdepend: 
+  - PlaceholderAPI
+authors: [ Avanti ]
+folia-supported: true
+commands:
+  example:
+    description: '实例命令'
