@@ -99,4 +99,13 @@ public class TradeCooldownManager {
     public void clearData() {
         cooldowns.clear();
     }
+    
+    /**
+     * 重载配置时清空冷却缓存
+     * 这样可以让新的冷却时间配置立即生效
+     */
+    public void reload() {
+        cooldowns.clear();
+        plugin.getLogger().info("交易冷却数据已清空");
+    }
 }

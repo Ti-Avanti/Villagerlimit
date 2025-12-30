@@ -3,6 +3,9 @@
 # 语言设置 (zh_CN, en_US)
 language: zh_CN
 
+# 调试模式（启用后会输出详细日志）
+debug: false
+
 # 缓存设置
 cache:
   # 缓存过期时间（秒）
@@ -37,8 +40,6 @@ villager-limit:
   chunk-radius: 3
   # 该范围内最大村民数量
   max-villagers: 5
-  # 超出限制时的提示消息
-  limit-message: "§c该区域村民数量已达上限！"
 
 # 村民生成设置
 spawn-control:
@@ -46,6 +47,8 @@ spawn-control:
   block-natural-spawn: true
   # 是否允许通过治愈僵尸村民获得
   allow-cure: true
+  # 是否允许使用刷怪蛋放置村民
+  allow-spawn-egg: true
 
 # 村民寿命设置
 villager-lifespan:
@@ -57,12 +60,6 @@ villager-lifespan:
   notify-enabled: true
   # 通知范围（格，0表示全服）
   notify-range: 16
-  # 设置寿命时的提示消息
-  set-message: "§a村民已获得 {days} 天寿命！"
-  # 寿命到期时的提示消息
-  expired-message: "§c一个村民的寿命已到期并消失了！"
-  # 头顶显示格式
-  display-format: "§e剩余 {days}天 {hours}小时"
 
 # 村民AI优化设置
 ai-optimization:
@@ -120,9 +117,6 @@ trade-control:
       ELYTRA: 50
     # 最低保留等级（不会扣到低于此等级）
     min-level: 0
-    # 经验不足时的提示
-    insufficient-exp-message: "§c交易需要 {required} 级经验，你当前只有 {current} 级！"
-    insufficient-points-message: "§c交易需要 {required} 点经验，你当前只有 {current} 点！"
   
   # 交易成本递增系统
   cost-scaling:
@@ -139,8 +133,6 @@ trade-control:
     reset-hours: 24
     # 衰减率（每小时衰减百分比，0表示不衰减）
     decay-rate: 0.0
-    # 成本递增提示
-    scaling-message: "§e该交易成本已增加至 §c{cost}§e 倍！"
   
   # 交易冷却系统
   cooldown:
@@ -160,8 +152,6 @@ trade-control:
       DIAMOND: 1800
       ENCHANTED_BOOK: 1200
       NETHERITE_INGOT: 2400
-    # 冷却提示
-    cooldown-message: "§c该交易冷却中，剩余: §e{time}"
   
   # 交易次数限制
   limit:
@@ -183,8 +173,6 @@ trade-control:
       DIAMOND: 5
       ENCHANTED_BOOK: 10
       NETHERITE_INGOT: 3
-    # 限制提示
-    limit-message: "§c今日交易次数已达上限！"
   
   # 权限组差异化配置
   permission-groups:
@@ -242,8 +230,6 @@ trade-control:
       DIAMOND_PICKAXE: 10
       ENCHANTED_BOOK: 8
       NETHERITE_INGOT: 20
-    # 绿宝石不足提示
-    insufficient-emerald-message: "§c交易需要额外 {required} 个绿宝石！"
   
   # 交易统计系统
   statistics:

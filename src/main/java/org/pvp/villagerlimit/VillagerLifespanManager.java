@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Villager;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.NamespacedKey;
+import org.pvp.villagerlimit.core.LanguageManager;
 import org.pvp.villagerlimit.display.ArmorStandAdapter;
 import org.pvp.villagerlimit.display.DisplayAdapter;
 import org.pvp.villagerlimit.display.TextDisplayAdapter;
@@ -61,6 +62,12 @@ public class VillagerLifespanManager {
         long endTime = System.currentTimeMillis() + (days * 24L * 60 * 60 * 1000);
         villager.getPersistentDataContainer().set(lifespanKey, PersistentDataType.LONG, endTime);
         
+        boolean debug = plugin.getLimitConfig().isDebugEnabled();
+        if (debug) {
+            plugin.getLogger().info("[寿命调试] 村民UUID: " + villager.getUniqueId());
+            plugin.getLogger().info("[寿命调试] 寿命结束时间: " + endTime);
+        }
+        
         // 创建显示实体
         createLifespanDisplay(villager);
     }
@@ -94,7 +101,15 @@ public class VillagerLifespanManager {
         
         // 创建新的显示实体
         String text = formatRemainingTime(getRemainingLifespan(villager));
+        boolean debug = plugin.getLimitConfig().isDebugEnabled();
+        if (debug) {
+            plugin.getLogger().info("[寿命调试] 创建显示实体，文本: " + text);
+        }
+        
         Entity display = displayAdapter.createDisplay(villager, text);
+        if (debug) {
+            plugin.getLogger().info("[寿命调试] 显示实体UUID: " + display.getUniqueId());
+        }
         
         // 保存显示实体UUID
         villager.getPersistentDataContainer().set(displayKey, PersistentDataType.STRING, display.getUniqueId().toString());
@@ -124,21 +139,35 @@ public class VillagerLifespanManager {
         long days = hours / 24;
         
         VillagerLimitConfig config = plugin.getLimitConfig();
+        LanguageManager lang = plugin.getModuleManager().getModule(LanguageManager.class);
         
-        if (days > 0) {
-            hours = hours % 24;
-            return config.getLifespanDisplayFormat()
-                .replace("{days}", String.valueOf(days))
-                .replace("{hours}", String.valueOf(hours));
-        } else if (hours > 0) {
-            minutes = minutes % 60;
-            return config.getLifespanDisplayFormat()
-                .replace("{days}", "0")
-                .replace("{hours}", String.valueOf(hours));
-        } else if (minutes > 0) {
-            return "§e剩余 " + minutes + " 分钟";
+        if (lang != null) {
+            if (days > 0) {
+                hours = hours % 24;
+                return lang.getMessage("lifespan.display-days", 
+                    Map.of("days", days, "hours", hours));
+            } else if (hours > 0) {
+                return lang.getMessage("lifespan.display-hours", 
+                    Map.of("hours", hours));
+            } else if (minutes > 0) {
+                return lang.getMessage("lifespan.display-minutes", 
+                    Map.of("minutes", minutes));
+            } else {
+                return lang.getMessage("lifespan.display-seconds", 
+                    Map.of("seconds", seconds));
+            }
         } else {
-            return "§c剩余 " + seconds + " 秒";
+            // 后备方案
+            if (days > 0) {
+                hours = hours % 24;
+                return "§e剩余 " + days + "天 " + hours + "小时";
+            } else if (hours > 0) {
+                return "§e剩余 " + hours + "小时";
+            } else if (minutes > 0) {
+                return "§e剩余 " + minutes + " 分钟";
+            } else {
+                return "§c剩余 " + seconds + " 秒";
+            }
         }
     }
     
@@ -186,7 +215,13 @@ public class VillagerLifespanManager {
                                 VillagerLimitConfig config = plugin.getLimitConfig();
                                 if (config.isLifespanNotifyEnabled()) {
                                     // 通知玩家
-                                    String message = config.getLifespanExpiredMessage();
+                                    LanguageManager lang = plugin.getModuleManager().getModule(LanguageManager.class);
+                                    String message;
+                                    if (lang != null) {
+                                        message = lang.getMessage("lifespan.expired");
+                                    } else {
+                                        message = "§c一个村民的寿命已到期并消失了！";
+                                    }
                                     int range = config.getLifespanNotifyRange();
                                     
                                     if (range <= 0) {
@@ -254,9 +289,19 @@ public class VillagerLifespanManager {
             }
         }
         
-        // 更新位置和文本
-        displayAdapter.updateLocation(display, villager.getLocation().add(0, villager.getHeight() + 0.5, 0));
+        // 只更新文本，位置由乘客系统自动处理
         updateDisplayText(display, villager);
+    }
+    
+    /**
+     * 清理村民显示（公开方法，供死亡监听器调用）
+     */
+    public void cleanupVillagerDisplay(Villager villager) {
+        boolean debug = plugin.getLimitConfig().isDebugEnabled();
+        if (debug) {
+            plugin.getLogger().info("[寿命调试] 村民死亡，清理显示实体");
+        }
+        removeLifespanDisplay(villager);
     }
     
     /**

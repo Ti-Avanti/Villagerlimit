@@ -13,6 +13,7 @@ villager:
   spawn-blocked: "&cNatural villager spawning is disabled!"
   cure-blocked: "&cZombie villager curing is disabled!"
   cure-limit: "&cVillager limit reached, cannot cure!"
+  spawn-egg-blocked: "&cVillager spawn eggs are disabled!"
 
 # Trading System
 trade:
@@ -20,9 +21,12 @@ trade:
   cooldown: "&cTrade on cooldown, remaining: &e{time}"
   limit-reached: "&cDaily trade limit reached!"
   insufficient-exp: "&cTrade requires {required} levels, you have {current}!"
+  insufficient-points: "&cTrade requires {required} experience points, you have {current}!"
   insufficient-emerald: "&cTrade requires {required} additional emeralds!"
   min-level: "&cTrade would reduce your level below minimum!"
   cost-scaling: "&eTrade cost increased to &c{cost}&e times!"
+  exp-consumed-level: "&eConsumed &c{amount} &elevels"
+  exp-consumed-points: "&eConsumed &c{amount} &eexperience points"
 
 # Statistics
 stats:
@@ -85,7 +89,7 @@ performance:
 lifespan:
   set: "§aVillager has been granted {days} days of lifespan!"
   expired: "§cA villager's lifespan has expired and disappeared!"
-  display: "§e{days}d {hours}h remaining"
+  display-days: "§e{days}d {hours}h remaining"
   display-hours: "§e{hours}h remaining"
   display-minutes: "§e{minutes}m remaining"
   display-seconds: "§c{seconds}s remaining"

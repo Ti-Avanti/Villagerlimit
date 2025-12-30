@@ -8,6 +8,7 @@ E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLPerf
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLReloadCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLStatsCommand.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\commands\VLTopCommand.java
+E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\ConfigGenerator.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\core\AbstractModule.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\core\LanguageManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\core\ModuleManager.java
@@ -33,10 +34,12 @@ E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\TradeDataManage
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\TradeLimitManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\TradeStatisticsManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerAIOptimizer.java
+E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerDeathListener.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerLifespanManager.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\Villagerlimit.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerLimitConfig.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerLimitPlaceholderExpansion.java
+E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerSpawnEggListener.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerSpawnListener.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\VillagerTradeListener.java
 E:\desktop\0.0\Villagerlimit\src\main\java\org\pvp\villagerlimit\ZombieVillagerCureListener.java

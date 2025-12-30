@@ -34,6 +34,16 @@ public class VLReloadCommand implements CommandExecutor, TabCompleter {
             plugin.getLimitConfig().reload();
             plugin.getPermissionGroupManager().reload();
             
+            // 重载所有模块
+            plugin.getModuleManager().reloadModules();
+            
+            // 清空Manager缓存数据，让新配置立即生效
+            if (plugin.getTradeListener() != null) {
+                plugin.getTradeListener().getCooldownManager().reload();
+                plugin.getTradeListener().getTradeDataManager().clearData();
+                plugin.getTradeListener().getLimitManager().clearData();
+            }
+            
             sender.sendMessage("§a配置重载成功！");
         } catch (Exception e) {
             sender.sendMessage("§c配置重载失败: " + e.getMessage());

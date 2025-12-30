@@ -5,6 +5,7 @@ org\pvp\villagerlimit\TradeDataManager.class
 org\pvp\villagerlimit\async\AsyncTaskManager.class
 org\pvp\villagerlimit\database\DatabaseManager.class
 org\pvp\villagerlimit\gui\GUIManager.class
+org\pvp\villagerlimit\VillagerDeathListener.class
 org\pvp\villagerlimit\cache\CacheManager.class
 org\pvp\villagerlimit\gui\BaseGUI.class
 org\pvp\villagerlimit\VillagerLimitConfig.class
@@ -24,6 +25,7 @@ org\pvp\villagerlimit\cache\CacheManager$CacheStats.class
 org\pvp\villagerlimit\display\TextDisplayAdapter.class
 org\pvp\villagerlimit\display\DisplayAdapter.class
 org\pvp\villagerlimit\database\TradeCooldownDAO.class
+org\pvp\villagerlimit\VillagerSpawnEggListener.class
 org\pvp\villagerlimit\async\AsyncTaskManager$1.class
 org\pvp\villagerlimit\VillagerSpawnListener.class
 org\pvp\villagerlimit\core\ModuleManager.class
@@ -39,6 +41,7 @@ org\pvp\villagerlimit\commands\VLStatsCommand.class
 org\pvp\villagerlimit\PermissionGroupManager.class
 org\pvp\villagerlimit\cache\ConfigCache.class
 org\pvp\villagerlimit\commands\KillVillagersCommand.class
+org\pvp\villagerlimit\ConfigGenerator.class
 org\pvp\villagerlimit\database\TradeScalingDAO.class
 org\pvp\villagerlimit\gui\LeaderboardGUI.class
 org\pvp\villagerlimit\optimization\MemoryOptimizer$MemoryStats.class

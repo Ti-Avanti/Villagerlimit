@@ -16,12 +16,17 @@ public class TextDisplayAdapter implements DisplayAdapter {
     public Entity createDisplay(Villager villager, String text) {
         Location loc = villager.getLocation().add(0, villager.getHeight() + 0.5, 0);
         
-        return villager.getWorld().spawn(loc, TextDisplay.class, display -> {
-            display.setBillboard(Display.Billboard.CENTER);
-            display.setSeeThrough(true);
-            display.setDefaultBackground(false);
-            display.text(net.kyori.adventure.text.Component.text(text));
+        TextDisplay display = villager.getWorld().spawn(loc, TextDisplay.class, d -> {
+            d.setBillboard(Display.Billboard.CENTER);
+            d.setSeeThrough(true);
+            d.setDefaultBackground(false);
+            d.text(net.kyori.adventure.text.Component.text(text));
         });
+        
+        // 让显示实体成为村民的乘客，自动跟随
+        villager.addPassenger(display);
+        
+        return display;
     }
     
     @Override
@@ -33,9 +38,7 @@ public class TextDisplayAdapter implements DisplayAdapter {
     
     @Override
     public void updateLocation(Entity entity, Location location) {
-        if (entity instanceof TextDisplay) {
-            entity.teleport(location);
-        }
+        // TextDisplay作为乘客会自动跟随，不需要手动更新位置
     }
     
     @Override

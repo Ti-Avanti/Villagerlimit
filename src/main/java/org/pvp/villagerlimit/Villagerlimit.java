@@ -52,8 +52,9 @@ public final class Villagerlimit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // 保存默认配置
-        saveDefaultConfig();
+        // 自动生成配置文件（根据系统语言）
+        ConfigGenerator configGenerator = new ConfigGenerator(this);
+        configGenerator.generateConfig();
         
         // 启用所有模块
         moduleManager.enableModules();
@@ -67,7 +68,9 @@ public final class Villagerlimit extends JavaPlugin {
         
         // 注册事件监听器
         getServer().getPluginManager().registerEvents(new VillagerSpawnListener(this), this);
+        getServer().getPluginManager().registerEvents(new VillagerSpawnEggListener(this), this);
         getServer().getPluginManager().registerEvents(new ZombieVillagerCureListener(this), this);
+        getServer().getPluginManager().registerEvents(new VillagerDeathListener(this), this);
         tradeListener = new VillagerTradeListener(this);
         getServer().getPluginManager().registerEvents(tradeListener, this);
         getServer().getPluginManager().registerEvents(new VillagerAIOptimizer(this), this);

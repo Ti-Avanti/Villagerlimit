@@ -8,6 +8,9 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTransformEvent;
+import org.pvp.villagerlimit.core.LanguageManager;
+
+import java.util.Map;
 
 public class ZombieVillagerCureListener implements Listener {
     
@@ -46,25 +49,47 @@ public class ZombieVillagerCureListener implements Listener {
                     .orElse(null);
                 
                 if (nearestPlayer != null) {
-                    nearestPlayer.sendMessage(config.getLimitMessage());
+                    LanguageManager lang = plugin.getModuleManager().getModule(LanguageManager.class);
+                    if (lang != null) {
+                        nearestPlayer.sendMessage(lang.getMessage("villager.limit-reached"));
+                    } else {
+                        nearestPlayer.sendMessage("§c该区域村民数量已达上限！");
+                    }
                 }
                 return;
             }
         }
         
         // 设置村民寿命
+        boolean debug = config.isDebugEnabled();
+        if (debug) {
+            plugin.getLogger().info("[寿命调试] 寿命系统启用: " + config.isLifespanEnabled());
+        }
         if (config.isLifespanEnabled()) {
+            if (debug) {
+                plugin.getLogger().info("[寿命调试] 准备设置村民寿命");
+            }
             plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 if (event.getTransformedEntity() instanceof Villager villager) {
-                    int lifespanDays = config.getVillagerLifespanDays();
+                    VillagerLimitConfig cfg = plugin.getLimitConfig();
+                    int lifespanDays = cfg.getVillagerLifespanDays();
+                    if (debug) {
+                        plugin.getLogger().info("[寿命调试] 设置村民寿命: " + lifespanDays + " 天");
+                    }
                     plugin.getLifespanManager().setVillagerLifespan(villager, lifespanDays);
                     
                     // 通知附近玩家
-                    if (config.isLifespanNotifyEnabled()) {
-                        String message = config.getLifespanSetMessage()
-                            .replace("{days}", String.valueOf(lifespanDays));
+                    if (cfg.isLifespanNotifyEnabled()) {
+                        LanguageManager lang = plugin.getModuleManager().getModule(LanguageManager.class);
+                        String message;
+                        if (lang != null) {
+                            message = lang.getMessage("lifespan.set", 
+                                Map.of("days", lifespanDays));
+                        } else {
+                            message = "§a村民已获得 " + lifespanDays + " 天寿命！";
+                        }
                         
-                        int range = config.getLifespanNotifyRange();
+                        int range = cfg.getLifespanNotifyRange();
                         if (range <= 0) {
                             // 全服通知
                             plugin.getServer().getOnlinePlayers()

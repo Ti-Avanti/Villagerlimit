@@ -15,16 +15,21 @@ public class ArmorStandAdapter implements DisplayAdapter {
     public Entity createDisplay(Villager villager, String text) {
         Location loc = villager.getLocation().add(0, villager.getHeight() + 0.3, 0);
         
-        return villager.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-            armorStand.setVisible(false);
-            armorStand.setGravity(false);
-            armorStand.setCustomNameVisible(true);
-            armorStand.setCustomName(text);
-            armorStand.setMarker(true);
-            armorStand.setSmall(true);
-            armorStand.setInvulnerable(true);
-            armorStand.setCollidable(false);
+        ArmorStand armorStand = villager.getWorld().spawn(loc, ArmorStand.class, as -> {
+            as.setVisible(false);
+            as.setGravity(false);
+            as.setCustomNameVisible(true);
+            as.setCustomName(text);
+            as.setMarker(true);
+            as.setSmall(true);
+            as.setInvulnerable(true);
+            as.setCollidable(false);
         });
+        
+        // 让盔甲架成为村民的乘客，自动跟随
+        villager.addPassenger(armorStand);
+        
+        return armorStand;
     }
     
     @Override
@@ -36,9 +41,7 @@ public class ArmorStandAdapter implements DisplayAdapter {
     
     @Override
     public void updateLocation(Entity entity, Location location) {
-        if (entity instanceof ArmorStand) {
-            entity.teleport(location);
-        }
+        // ArmorStand作为乘客会自动跟随，不需要手动更新位置
     }
     
     @Override

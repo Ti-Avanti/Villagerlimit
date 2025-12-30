@@ -7,7 +7,7 @@ import java.util.List;
 public class VillagerLimitConfig {
     
     private final Villagerlimit plugin;
-    private final FileConfiguration config;
+    private FileConfiguration config;
     
     public VillagerLimitConfig(Villagerlimit plugin) {
         this.plugin = plugin;
@@ -27,10 +27,6 @@ public class VillagerLimitConfig {
         return config.getInt("villager-limit.max-villagers", 5);
     }
     
-    public String getLimitMessage() {
-        return config.getString("villager-limit.limit-message", "§c该区域村民数量已达上限！");
-    }
-    
     // 生成控制设置
     public boolean isBlockNaturalSpawn() {
         return config.getBoolean("spawn-control.block-natural-spawn", true);
@@ -38,6 +34,11 @@ public class VillagerLimitConfig {
     
     public boolean isAllowCure() {
         return config.getBoolean("spawn-control.allow-cure", true);
+    }
+    
+    // 刷怪蛋设置
+    public boolean isAllowSpawnEgg() {
+        return config.getBoolean("spawn-control.allow-spawn-egg", true);
     }
     
     // AI优化设置
@@ -79,16 +80,6 @@ public class VillagerLimitConfig {
         return config.getInt("trade-control.exp-cost.min-level", 0);
     }
     
-    public String getInsufficientExpMessage() {
-        return config.getString("trade-control.exp-cost.insufficient-exp-message", 
-            "§c交易需要 {required} 级经验，你当前只有 {current} 级！");
-    }
-    
-    public String getInsufficientPointsMessage() {
-        return config.getString("trade-control.exp-cost.insufficient-points-message", 
-            "§c交易需要 {required} 点经验，你当前只有 {current} 点！");
-    }
-    
     // 成本递增设置
     public boolean isCostScalingEnabled() {
         return config.getBoolean("trade-control.cost-scaling.enabled", true);
@@ -118,11 +109,6 @@ public class VillagerLimitConfig {
         return config.getDouble("trade-control.cost-scaling.decay-rate", 0.0);
     }
     
-    public String getScalingMessage() {
-        return config.getString("trade-control.cost-scaling.scaling-message", 
-            "§e该交易成本已增加至 §c{cost}§e 倍！");
-    }
-    
     // 命令设置
     public boolean isKillVillagersEnabled() {
         return config.getBoolean("commands.killvillagers-enabled", true);
@@ -130,6 +116,12 @@ public class VillagerLimitConfig {
     
     public void reload() {
         plugin.reloadConfig();
+        this.config = plugin.getConfig();
+    }
+    
+    // 调试模式
+    public boolean isDebugEnabled() {
+        return config.getBoolean("debug", false);
     }
     
     // 交易冷却设置
@@ -147,11 +139,6 @@ public class VillagerLimitConfig {
     
     public int getItemCooldown(String material) {
         return config.getInt("trade-control.cooldown.per-item." + material, 0);
-    }
-    
-    public String getCooldownMessage() {
-        return config.getString("trade-control.cooldown.cooldown-message", 
-            "§c该交易冷却中，剩余: §e{time}");
     }
     
     // 交易次数限制设置
@@ -173,10 +160,6 @@ public class VillagerLimitConfig {
     
     public int getItemTradeLimit(String material) {
         return config.getInt("trade-control.limit.per-item." + material, 0);
-    }
-    
-    public String getLimitReachedMessage() {
-        return config.getString("trade-control.limit.limit-message", "§c今日交易次数已达上限！");
     }
     
     // 权限组设置
@@ -203,11 +186,6 @@ public class VillagerLimitConfig {
     
     public int getValuableItemEmeraldCost(String material) {
         return config.getInt("trade-control.economy-balance.valuable-items-emerald-cost." + material, 0);
-    }
-    
-    public String getInsufficientEmeraldMessage() {
-        return config.getString("trade-control.economy-balance.insufficient-emerald-message", 
-            "§c交易需要额外 {required} 个绿宝石！");
     }
     
     // 交易统计设置
@@ -238,21 +216,6 @@ public class VillagerLimitConfig {
     
     public boolean isLifespanNotifyEnabled() {
         return config.getBoolean("villager-lifespan.notify-enabled", true);
-    }
-    
-    public String getLifespanSetMessage() {
-        return config.getString("villager-lifespan.set-message", 
-            "§a村民已获得 {days} 天寿命！");
-    }
-    
-    public String getLifespanExpiredMessage() {
-        return config.getString("villager-lifespan.expired-message", 
-            "§c一个村民的寿命已到期并消失了！");
-    }
-    
-    public String getLifespanDisplayFormat() {
-        return config.getString("villager-lifespan.display-format", 
-            "§e剩余 {days}天 {hours}小时");
     }
     
     public int getLifespanNotifyRange() {

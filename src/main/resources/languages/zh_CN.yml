@@ -13,6 +13,7 @@ villager:
   spawn-blocked: "&c村民自然生成已被禁用！"
   cure-blocked: "&c僵尸村民治愈已被禁用！"
   cure-limit: "&c该区域村民数量已达上限，无法治愈！"
+  spawn-egg-blocked: "&c禁止使用村民刷怪蛋！"
 
 # 交易系统
 trade:
@@ -20,9 +21,12 @@ trade:
   cooldown: "&c该交易冷却中，剩余: &e{time}"
   limit-reached: "&c今日交易次数已达上限！"
   insufficient-exp: "&c交易需要 {required} 级经验，你当前只有 {current} 级！"
+  insufficient-points: "&c交易需要 {required} 点经验，你当前只有 {current} 点！"
   insufficient-emerald: "&c交易需要额外 {required} 个绿宝石！"
   min-level: "&c交易会使你的等级低于最低保留等级！"
   cost-scaling: "&e该交易成本已增加至 &c{cost}&e 倍！"
+  exp-consumed-level: "&e消耗了 &c{amount} &e级经验"
+  exp-consumed-points: "&e消耗了 &c{amount} &e点经验值"
 
 # 统计系统
 stats:
@@ -85,7 +89,7 @@ performance:
 lifespan:
   set: "§a村民已获得 {days} 天寿命！"
   expired: "§c一个村民的寿命已到期并消失了！"
-  display: "§e剩余 {days}天 {hours}小时"
+  display-days: "§e剩余 {days}天 {hours}小时"
   display-hours: "§e剩余 {hours}小时"
   display-minutes: "§e剩余 {minutes}分钟"
   display-seconds: "§c剩余 {seconds}秒"

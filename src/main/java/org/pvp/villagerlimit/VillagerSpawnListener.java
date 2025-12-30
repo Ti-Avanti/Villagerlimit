@@ -21,6 +21,11 @@ public class VillagerSpawnListener implements Listener {
         
         VillagerLimitConfig config = plugin.getLimitConfig();
         
+        // 如果是刷怪蛋生成，交给 VillagerSpawnEggListener 处理
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
+            return;
+        }
+        
         // 如果配置为禁止自然生成，则取消所有自然生成
         if (config.isBlockNaturalSpawn()) {
             event.setCancelled(true);
