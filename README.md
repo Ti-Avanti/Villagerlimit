@@ -169,8 +169,7 @@ trade-control:
 
 如果您在使用过程中遇到问题或有建议，欢迎：
 - 提交 [Issue](../../issues)
-- 查看 [Wiki](../../wiki)
-- 阅读 [论坛帖子](FORUM_POST.md)
+
 
 ---
 
