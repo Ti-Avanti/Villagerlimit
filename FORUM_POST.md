@@ -113,6 +113,8 @@ VillagerLimit 是一款专为生存服务器设计的村民管理插件，旨在
 %villagerlimit_daily_limit% - 每日交易限制
 %villagerlimit_daily_used% - 今日已用次数
 %villagerlimit_daily_remaining% - 今日剩余次数
+%villagerlimit_player_exp% - 玩家当前总经验值 ⭐ NEW!
+%villagerlimit_player_level% - 玩家当前等级 ⭐ NEW!
 ```
 
 ### 排行榜变量 ⭐ NEW!
@@ -132,7 +134,7 @@ VillagerLimit 是一款专为生存服务器设计的村民管理插件，旨在
 
 **应用场景:**
 ```yaml
-# 计分板显示
+# 计分板显示 - 交易排行榜
 scoreboard:
   - "&6&l交易排行榜"
   - "&e1. %villagerlimit_top_1_name% &7- &6%villagerlimit_top_1_trades%"
@@ -270,9 +272,12 @@ permission-groups:
 - ✨ 新增 GUI 系统（统计界面、排行榜界面）
 - ✨ 新增所有命令的 Tab 补全功能
 - ✨ 新增排行榜 PlaceholderAPI 变量（top_<排名>_name/trades/exp）
+- ✨ 新增玩家经验和等级 PlaceholderAPI 变量（player_exp/player_level）
 - ✨ 新增 `/vladmin info` 命令查看插件信息
 - 🎨 优化命令执行体验（玩家自动打开 GUI，控制台显示文本）
 - 🎨 精美的 GUI 界面设计（边框、图标、颜色）
+- 🐛 修复配置重载后交易冷却时间不生效的问题
+- 🐛 修复重载时Manager缓存数据未清空的问题
 - 📝 完善命令帮助信息和 Tab 补全
 - 📝 更新 README 和论坛文档
 
@@ -347,7 +352,13 @@ A: 可以。所有消息都在 `languages/zh_CN.yml` 或 `languages/en_US.yml` �
 A: 使用 `/vlperf` 命令可以查看详细的性能统计，包括TPS、内存使用、缓存命中率、线程池状态等。
 
 **Q: 从旧版本升级需要注意什么？**
-A: 建议先备份配置文件和数据库。从2.1.1升级到2.1.2无需清空数据，直接替换jar文件即可。
+A: 建议先备份配置文件和数据库。从2.1.1升级到2.1.2无需清空数据，直接替换jar文件即可。升级后建议执行 `/vlreload` 重载配置。
+
+**Q: 配置重载后为什么冷却时间没有变化？**
+A: v2.1.2已修复此问题。现在执行 `/vlreload` 会自动清空所有Manager的缓存数据，新配置立即生效。
+
+**Q: 如何在计分板中显示玩家经验和等级？**
+A: 使用 `%villagerlimit_player_exp%` 和 `%villagerlimit_player_level%` 变量即可。需要安装 PlaceholderAPI 插件。
 
 ## 反馈与支持
 

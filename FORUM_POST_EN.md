@@ -113,6 +113,8 @@ Both modes support:
 %villagerlimit_daily_limit% - Daily trade limit
 %villagerlimit_daily_used% - Today's used count
 %villagerlimit_daily_remaining% - Today's remaining count
+%villagerlimit_player_exp% - Player's current total experience ⭐ NEW!
+%villagerlimit_player_level% - Player's current level ⭐ NEW!
 ```
 
 ### Leaderboard Variables ⭐ NEW!
@@ -132,7 +134,7 @@ Both modes support:
 
 **Use Cases:**
 ```yaml
-# Scoreboard display
+# Scoreboard display - Trading Leaderboard
 scoreboard:
   - "&6&lTrading Leaderboard"
   - "&e1. %villagerlimit_top_1_name% &7- &6%villagerlimit_top_1_trades%"
@@ -270,9 +272,12 @@ Suitable for servers of all sizes, from small survival servers to large network 
 - ✨ Added GUI system (statistics interface, leaderboard interface)
 - ✨ Added Tab completion for all commands
 - ✨ Added leaderboard PlaceholderAPI variables (top_<rank>_name/trades/exp)
+- ✨ Added player experience and level PlaceholderAPI variables (player_exp/player_level)
 - ✨ Added `/vladmin info` command to view plugin information
 - 🎨 Optimized command execution experience (players auto-open GUI, console shows text)
 - 🎨 Beautiful GUI interface design (borders, icons, colors)
+- 🐛 Fixed config reload not applying trading cooldown changes
+- 🐛 Fixed Manager cache data not being cleared on reload
 - 📝 Improved command help information and Tab completion
 - 📝 Updated README and forum documentation
 
@@ -347,7 +352,13 @@ A: Yes. All messages are in `languages/zh_CN.yml` or `languages/en_US.yml` and c
 A: Use `/vlperf` command to view detailed performance statistics including TPS, memory usage, cache hit rate, thread pool status, etc.
 
 **Q: What to note when upgrading from old versions?**
-A: Recommend backing up config files and database first. Upgrading from 2.1.1 to 2.1.2 requires no data clearing, just replace the jar file.
+A: Recommend backing up config files and database first. Upgrading from 2.1.1 to 2.1.2 requires no data clearing, just replace the jar file. After upgrading, recommend executing `/vlreload` to reload config.
+
+**Q: Why doesn't cooldown time change after config reload?**
+A: This issue has been fixed in v2.1.2. Now executing `/vlreload` will automatically clear all Manager cache data, making new config take effect immediately.
+
+**Q: How to display player experience and level in scoreboard?**
+A: Use `%villagerlimit_player_exp%` and `%villagerlimit_player_level%` variables. Requires PlaceholderAPI plugin installed.
 
 ## Feedback & Support
 

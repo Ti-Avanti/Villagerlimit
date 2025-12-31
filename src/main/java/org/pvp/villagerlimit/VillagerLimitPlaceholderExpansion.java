@@ -93,6 +93,12 @@ public class VillagerLimitPlaceholderExpansion extends PlaceholderExpansion {
                 int remaining = (max + grp.dailyLimitBonus) - used;
                 return String.valueOf(Math.max(0, remaining));
                 
+            case "player_exp":
+                return String.valueOf(getTotalExperience(p));
+                
+            case "player_level":
+                return String.valueOf(p.getLevel());
+                
             default:
                 return null;
         }
@@ -148,5 +154,36 @@ public class VillagerLimitPlaceholderExpansion extends PlaceholderExpansion {
             }
         }
         return -1;
+    }
+    
+    /**
+     * 获取玩家总经验值
+     */
+    private int getTotalExperience(Player player) {
+        int exp = 0;
+        int level = player.getLevel();
+        
+        // 累加之前所有等级的经验
+        for (int i = 0; i < level; i++) {
+            exp += getExperienceToLevelUp(i);
+        }
+        
+        // 加上当前等级的进度经验
+        exp += Math.round(getExperienceToLevelUp(level) * player.getExp());
+        
+        return exp;
+    }
+    
+    /**
+     * 获取升到下一级所需经验
+     */
+    private int getExperienceToLevelUp(int level) {
+        if (level >= 30) {
+            return 112 + (level - 30) * 9;
+        }
+        if (level >= 15) {
+            return 37 + (level - 15) * 5;
+        }
+        return 7 + level * 2;
     }
 }

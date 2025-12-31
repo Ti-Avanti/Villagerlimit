@@ -38,15 +38,39 @@
    - 可用于计分板、全息显示
    - 自动更新，实时同步
 
-3. **智能命令执行**
+3. **玩家经验和等级变量** ⭐ 新增
+   ```
+   %villagerlimit_player_exp%    - 玩家当前总经验值
+   %villagerlimit_player_level%  - 玩家当前等级
+   ```
+   - 自动计算玩家所有等级的累计经验值
+   - 包含当前等级的进度经验
+   - 使用 Minecraft 原版经验公式计算
+   - 可用于计分板、称号系统等
+
+4. **智能命令执行**
    - 玩家执行命令：自动打开 GUI
    - 控制台执行命令：显示文本格式
    - 兼容性更好，体验更佳
 
-4. **新增管理命令**
+5. **新增管理命令**
    - `/vladmin info` - 查看插件信息
    - 显示版本、作者、数据库状态
    - 方便服主快速诊断
+
+### 🐛 Bug修复
+
+1. **修复配置重载问题** ⭐ 重要修复
+   - 问题：修改交易冷却配置后执行 `/vlreload` 不生效
+   - 原因：Manager类的缓存数据未清空
+   - 修复：重载时自动清空所有Manager缓存
+   - 影响：TradeCooldownManager、TradeLimitManager、TradeDataManager
+
+2. **优化重载机制**
+   - 添加 `TradeCooldownManager.reload()` 方法
+   - 添加 `VillagerTradeListener` 访问方法
+   - 重载时清空冷却记录、交易数据、次数限制
+   - 新配置立即生效，无需重启服务器
 
 ### 🎨 界面优化
 
@@ -87,6 +111,12 @@
    - 智能过滤和匹配
    - 支持多级补全
 
+4. **配置重载优化**
+   - 清空冷却缓存（cooldowns Map）
+   - 清空交易数据缓存（tradeRecords Map）
+   - 清空次数限制缓存（limitRecords Map）
+   - 确保新配置立即生效
+
 ### 📊 PlaceholderAPI 增强
 
 **新增变量总览**：
@@ -95,8 +125,10 @@
 - %villagerlimit_trades%
 - %villagerlimit_exp_spent%
 - %villagerlimit_rank%
+- %villagerlimit_player_exp%    ⭐ 新增
+- %villagerlimit_player_level%  ⭐ 新增
 
-排行榜（新增）：
+排行榜：
 - %villagerlimit_top_<排名>_name%
 - %villagerlimit_top_<排名>_trades%
 - %villagerlimit_top_<排名>_exp%
@@ -104,7 +136,7 @@
 
 **应用示例**：
 ```yaml
-# 计分板显示
+# 计分板显示 - 交易排行榜
 scoreboard:
   - "&6&l交易排行榜"
   - "&e1. %villagerlimit_top_1_name% &7- &6%villagerlimit_top_1_trades%"
@@ -129,13 +161,20 @@ scoreboard:
 2. 在计分板/全息中使用变量
 3. 自动显示实时数据
 
+**配置重载**：
+1. 修改 `config.yml` 配置文件
+2. 执行 `/vlreload` 命令
+3. 所有缓存自动清空，新配置立即生效
+4. 无需重启服务器
+
 ### 📝 升级指南
 
 1. 备份现有配置和数据
 2. 替换插件jar文件为 `Villagerlimit-2.1.2.jar`
 3. 重启服务器或使用 `/vlreload`
 4. 测试 GUI 和 Tab 补全功能
-5. 配置 PlaceholderAPI 变量（可选）
+5. 测试配置重载功能（修改冷却时间后重载）
+6. 配置 PlaceholderAPI 变量（可选）
 
 ### ⚠️ 注意事项
 
@@ -143,6 +182,7 @@ scoreboard:
 - GUI 需要玩家在线才能打开
 - 控制台执行命令仍显示文本格式
 - PlaceholderAPI 变量需要安装 PlaceholderAPI 插件
+- 配置重载会清空所有缓存数据（冷却、交易记录等）
 
 ### 🔗 相关链接
 
