@@ -6,6 +6,7 @@ import org.pvp.villagerlimit.async.AsyncTaskManager;
 import org.pvp.villagerlimit.cache.CacheManager;
 import org.pvp.villagerlimit.commands.KillVillagersCommand;
 import org.pvp.villagerlimit.commands.VLAdminCommand;
+import org.pvp.villagerlimit.commands.VLLifespanCommand;
 import org.pvp.villagerlimit.commands.VLPerformanceCommand;
 import org.pvp.villagerlimit.commands.VLReloadCommand;
 import org.pvp.villagerlimit.commands.VLStatsCommand;
@@ -101,6 +102,10 @@ public final class Villagerlimit extends JavaPlugin {
         VLPerformanceCommand perfCmd = new VLPerformanceCommand(this);
         getCommand("vlperf").setExecutor(perfCmd);
         getCommand("vlperf").setTabCompleter(perfCmd);
+        
+        VLLifespanCommand lifespanCmd = new VLLifespanCommand(this);
+        getCommand("vllifespan").setExecutor(lifespanCmd);
+        getCommand("vllifespan").setTabCompleter(lifespanCmd);
         
         // 注册 PlaceholderAPI
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

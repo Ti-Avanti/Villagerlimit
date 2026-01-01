@@ -41,6 +41,11 @@ public class VillagerLimitConfig {
         return config.getBoolean("spawn-control.allow-spawn-egg", true);
     }
     
+    // 繁殖设置
+    public boolean isBreedingAllowed() {
+        return config.getBoolean("spawn-control.allow-breeding", true);
+    }
+    
     // AI优化设置
     public boolean isAIOptimizationEnabled() {
         return config.getBoolean("ai-optimization.enabled", true);
@@ -214,11 +219,29 @@ public class VillagerLimitConfig {
         return config.getInt("villager-lifespan.days", 7);
     }
     
+    // 寿命天数的简化别名
+    public int getLifespanDays() {
+        return getVillagerLifespanDays();
+    }
+    
     public boolean isLifespanNotifyEnabled() {
         return config.getBoolean("villager-lifespan.notify-enabled", true);
     }
     
     public int getLifespanNotifyRange() {
         return config.getInt("villager-lifespan.notify-range", 16);
+    }
+    
+    // 自动添加寿命设置
+    public boolean isAutoAddLifespanEnabled() {
+        return config.getBoolean("villager-lifespan.auto-add-lifespan.enabled", true);
+    }
+    
+    public int getAutoAddCheckInterval() {
+        return config.getInt("villager-lifespan.auto-add-lifespan.check-interval", 300);
+    }
+    
+    public boolean isAutoAddCheckOnStartup() {
+        return config.getBoolean("villager-lifespan.auto-add-lifespan.check-on-startup", true);
     }
 }

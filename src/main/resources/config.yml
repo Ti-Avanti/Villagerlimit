@@ -49,6 +49,8 @@ spawn-control:
   allow-cure: true
   # 是否允许使用刷怪蛋放置村民
   allow-spawn-egg: true
+  # 是否允许村民繁殖
+  allow-breeding: true
 
 # 村民寿命设置
 villager-lifespan:
@@ -60,6 +62,14 @@ villager-lifespan:
   notify-enabled: true
   # 通知范围（格，0表示全服）
   notify-range: 16
+  # 自动添加寿命设置
+  auto-add-lifespan:
+    # 是否启用自动添加寿命
+    enabled: true
+    # 检查间隔（秒），0表示仅启动时检查
+    check-interval: 300
+    # 启动时是否检查
+    check-on-startup: true
 
 # 村民AI优化设置
 ai-optimization:

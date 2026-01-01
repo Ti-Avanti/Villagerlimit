@@ -39,6 +39,7 @@ public class VillagerLifespanManager {
         
         startLifespanCheckTask();
         startDisplayUpdateTask();
+        startAutoAddLifespanTask();
     }
     
     /**
@@ -312,5 +313,87 @@ public class VillagerLifespanManager {
             displayAdapter.removeDisplay(display);
         }
         displayCache.clear();
+    }
+    
+    /**
+     * 启动自动添加寿命任务
+     */
+    private void startAutoAddLifespanTask() {
+        VillagerLimitConfig config = plugin.getLimitConfig();
+        
+        // 检查是否启用自动添加寿命
+        if (!config.isAutoAddLifespanEnabled()) {
+            plugin.getLogger().info("[寿命系统] 自动添加寿命功能未启用");
+            return;
+        }
+        
+        // 启动时检查
+        if (config.isAutoAddCheckOnStartup()) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                plugin.getLogger().info("[寿命系统] 执行启动时自动检查...");
+                autoAddLifespanToVillagers();
+            }, 20L * 5); // 延迟5秒执行，等待世界完全加载
+        }
+        
+        // 定时任务
+        int interval = config.getAutoAddCheckInterval();
+        if (interval > 0) {
+            plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
+                plugin.getLogger().info("[寿命系统] 执行定时自动检查...");
+                autoAddLifespanToVillagers();
+            }, 20L * interval, 20L * interval);
+            
+            plugin.getLogger().info("[寿命系统] 自动添加寿命任务已启动，检查间隔: " + interval + " 秒");
+        } else {
+            plugin.getLogger().info("[寿命系统] 自动添加寿命任务仅在启动时执行");
+        }
+    }
+    
+    /**
+     * 自动为所有无寿命的村民添加寿命
+     */
+    private void autoAddLifespanToVillagers() {
+        VillagerLimitConfig config = plugin.getLimitConfig();
+        
+        // 检查寿命系统是否启用
+        if (!config.isLifespanEnabled()) {
+            plugin.getLogger().info("[寿命系统] 寿命系统未启用，跳过自动添加");
+            return;
+        }
+        
+        int totalVillagers = 0;
+        int addedCount = 0;
+        int days = config.getLifespanDays();
+        
+        try {
+            // 扫描所有世界的所有村民
+            for (var world : plugin.getServer().getWorlds()) {
+                for (var entity : world.getEntities()) {
+                    if (entity instanceof Villager villager) {
+                        totalVillagers++;
+                        
+                        // 检查是否已有寿命
+                        if (!hasLifespan(villager)) {
+                            // 添加寿命
+                            setVillagerLifespan(villager, days);
+                            addedCount++;
+                            
+                            if (config.isDebugEnabled()) {
+                                plugin.getLogger().info("[寿命调试] 为村民添加寿命: " + villager.getUniqueId() + 
+                                    " 位置: " + villager.getLocation());
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // 记录结果
+            plugin.getLogger().info("[寿命系统] 自动检查完成 - 总村民数: " + totalVillagers + 
+                ", 添加寿命: " + addedCount + ", 已有寿命: " + (totalVillagers - addedCount));
+            
+        } catch (Exception e) {
+            plugin.getLogger().severe("[寿命系统] 自动添加寿命时发生错误:");
+            e.printStackTrace();
+        }
     }
 }

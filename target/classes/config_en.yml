@@ -48,6 +48,8 @@ spawn-control:
   allow-cure: true
   # Allow placing villagers with spawn eggs
   allow-spawn-egg: true
+  # Allow villager breeding
+  allow-breeding: true
   # Message when spawn egg is blocked
   spawn-egg-blocked-message: "§cUsing villager spawn eggs is disabled!"
 
@@ -67,6 +69,14 @@ villager-lifespan:
   expired-message: "§cA villager's lifespan has expired and disappeared!"
   # Display format above head
   display-format: "§eRemaining {days}d {hours}h"
+  # Auto-add lifespan settings
+  auto-add-lifespan:
+    # Enable auto-add lifespan
+    enabled: true
+    # Check interval (seconds), 0 = only check on startup
+    check-interval: 300
+    # Check on startup
+    check-on-startup: true
 
 # Villager AI optimization settings
 ai-optimization:

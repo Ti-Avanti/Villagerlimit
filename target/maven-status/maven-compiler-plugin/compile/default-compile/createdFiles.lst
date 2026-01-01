@@ -31,6 +31,7 @@ org\pvp\villagerlimit\VillagerSpawnListener.class
 org\pvp\villagerlimit\core\ModuleManager.class
 org\pvp\villagerlimit\PermissionGroupManager$PermissionGroup.class
 org\pvp\villagerlimit\commands\VLTopCommand.class
+org\pvp\villagerlimit\commands\VLLifespanCommand.class
 org\pvp\villagerlimit\core\AbstractModule.class
 org\pvp\villagerlimit\TradeCooldownManager.class
 org\pvp\villagerlimit\ZombieVillagerCureListener.class

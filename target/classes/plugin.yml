@@ -1,5 +1,5 @@
 name: Villagerlimit
-version: '2.1.2'
+version: '2.1.3'
 main: org.pvp.villagerlimit.Villagerlimit
 api-version: '1.21'
 author: Ti_Avanti
@@ -29,6 +29,10 @@ commands:
   vlperf:
     description: 查看性能统计
     usage: /vlperf [cache|memory|threads|tracker|cleanup]
+    permission: villagerlimit.admin
+  vllifespan:
+    description: 村民寿命管理
+    usage: /vllifespan <check|add|list> [天数]
     permission: villagerlimit.admin
 permissions:
   villagerlimit.kill:
